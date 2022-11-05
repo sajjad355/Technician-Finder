@@ -1,3 +1,37 @@
+
+
+<?php
+session_start(); 
+
+if(isset($_SESSION['sajjad'])){
+  
+    ?>
+     <script> 
+     alert('Successful,Now you are the member of our community');
+      </script>
+    <?php
+
+  unset($_SESSION['sajjad']);
+  session_destroy();
+ }
+
+ if(isset($_SESSION['rahman'])){
+  
+    ?>
+    <script> 
+    alert('Successful,Your request is pending for approval');
+     </script>
+   <?php
+
+  unset($_SESSION['rahman']);
+  session_destroy();
+ }
+
+ 
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
