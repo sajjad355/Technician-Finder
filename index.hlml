@@ -7,6 +7,7 @@
 </head>
 <body>
 
-<h1>Technician</h1>    
+<?php include 'HomePage.php';?>
+    
 </body>
 </html>
