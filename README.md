@@ -1,142 +1,188 @@
-<div align="center">
-    <a href="https://php.net">
-        <img
-            alt="PHP"
-            src="https://www.php.net/images/logos/new-php-logo.svg"
-            width="150">
-    </a>
-</div>
+# PHP Project Starter
 
-# The PHP Interpreter
+[![Build Status](https://travis-ci.org/cpliakas/php-project-starter.svg?branch=master)](https://travis-ci.org/cpliakas/php-project-starter)
+[![Code Coverage](https://scrutinizer-ci.com/g/cpliakas/php-project-starter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/cpliakas/php-project-starter/?branch=master)
+[![HHVM Status](http://hhvm.h4cc.de/badge/cpliakas/php-project-starter.svg)](http://hhvm.h4cc.de/package/cpliakas/php-project-starter)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/cpliakas/php-project-starter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/cpliakas/php-project-starter/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/cpliakas/php-project-starter/v/stable.svg)](https://packagist.org/packages/cpliakas/php-project-starter)
+[![License](https://poser.pugx.org/cpliakas/php-project-starter/license.svg)](https://packagist.org/packages/cpliakas/php-project-starter)
 
-PHP is a popular general-purpose scripting language that is especially suited to
-web development. Fast, flexible and pragmatic, PHP powers everything from your
-blog to the most popular websites in the world. PHP is distributed under the
-[PHP License v3.01](LICENSE).
+PHP Project Starter is a command line tool that allows developers to quickly
+create PHP applications that use common conventions and best-in-breed
+development tools. The goals of this application are to guide developers towards
+best practices and get them from zero-to-CI in seconds.
 
-[![Push](https://github.com/php/php-src/actions/workflows/push.yml/badge.svg)](https://github.com/php/php-src/actions/workflows/push.yml)
-[![Build status](https://travis-ci.com/php/php-src.svg?branch=master)](https://travis-ci.com/github/php/php-src)
-[![Build status](https://ci.appveyor.com/api/projects/status/meyur6fviaxgdwdy/branch/master?svg=true)](https://ci.appveyor.com/project/php/php-src)
-[![Build Status](https://dev.azure.com/phpazuredevops/php/_apis/build/status/php.php-src?branchName=master)](https://dev.azure.com/phpazuredevops/php/_build/latest?definitionId=1&branchName=master)
-[![Fuzzing Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/php.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:php)
+The applications created by this tool have an opinionated directory structure,
+build system, and pre-configured set of service connections with badges ready to
+go. Refer to the [Tools And Conventions](#tools-and-conventions) and
+[Directory Structure](#directory-structure) sections below for more details.
 
-## Documentation
+See the examples below for repositories created by the PHP Project Starter tool:
 
-The PHP manual is available at [php.net/docs](https://php.net/docs).
+* [Git Wrapper](https://github.com/cpliakas/git-wrapper)
+* [HMAC Request Signer](https://github.com/acquia/hmac-request)
 
-## Installation
+## Usage
 
-### Prebuilt packages and binaries
+#### Install The Command Line Tool
 
-Prebuilt packages and binaries can be used to get up and running fast with PHP.
+##### Download Via Browser
 
-For Windows, the PHP binaries can be obtained from
-[windows.php.net](https://windows.php.net). After extracting the archive the
-`*.exe` files are ready to use.
+Download `php-project.phar` from [https://github.com/cpliakas/php-project-starter/releases/latest](https://github.com/cpliakas/php-project-starter/releases/latest),
 
-For other systems, see the [installation chapter](https://php.net/install).
+##### Download Via Command Line
 
-### Building PHP source code
+`curl -O http://www.chrispliakas.com/php-project-starter/download/latest/php-project.phar`
 
-*For Windows, see [Build your own PHP on Windows](https://wiki.php.net/internals/windows/stepbystepbuild_sdk_2).*
+##### Test It Out!
 
-For a minimal PHP build from Git, you will need autoconf, bison, and re2c. For
-a default build, you will additionally need libxml2 and libsqlite3.
+Run `php php-project.phar --help` to see all options supported by the command
+line tool and ensure that installation succeeded.
 
-On Ubuntu, you can install these using:
+It is also common practice to place the `php-project.phar` file in a location
+that makes it easier to access, for example `/usr/local/bin`, and renaming it
+to `php-project`. Ensure the file is executable by running `chmod 755` so that
+you don't have to prefix the command with `php`.
 
-    sudo apt install -y pkg-config build-essential autoconf bison re2c \
-                        libxml2-dev libsqlite3-dev
+#### Create A New Project
 
-On Fedora, you can install these using:
+```
+php php-project.phar new \
+  --label="My Project" \
+  --description="A longer description for My Project" \
+  --namespace="My\Project" \
+  cpliakas/my-project
+```
 
-    sudo dnf install re2c bison autoconf make libtool ccache libxml2-devel sqlite-devel
+Pass the `--jenkins-url` option to post a job to Jenkins that consumes the
+build artifacts.
 
-Generate configure:
+#### Make A Repository On GitHub
 
-    ./buildconf
+[Make a new repository](https://help.github.com/articles/create-a-repo#make-a-new-repository-on-github)
+matching the project name (e.g. `cpliakas/my-project`) and push your code. Note
+that the `origin` remote is already set in the repository.
 
-Configure your build. `--enable-debug` is recommended for development, see
-`./configure --help` for a full list of options.
+```
+cd ../path/to/working-copy
+git push -u origin master
+```
 
-    # For development
-    ./configure --enable-debug
-    # For production
-    ./configure
+#### Configure Other Services
 
-Build PHP. To speed up the build, specify the maximum number of jobs using `-j`:
+  * Packagist: Follow the [Publish It](https://packagist.org/) section
+  * Travis CI: Follow steps one and two of the [Getting Started](http://about.travis-ci.org/docs/user/getting-started/#Step-one%3A-Sign-in) documentation
+  * Scritinizer CI: Follow the [Getting Started](https://scrutinizer-ci.com/docs/) documentation
 
-    make -j4
+#### Keeping Up-To-Date
 
-The number of jobs should usually match the number of available cores, which
-can be determined using `nproc`.
+Run the following command to update PHP Project Starter to the latest stable
+version:
 
-## Testing PHP source code
+`php php-project.phar self-update`
 
-PHP ships with an extensive test suite, the command `make test` is used after
-successful compilation of the sources to run this test suite.
+## Using Apache Ant
 
-It is possible to run tests using multiple cores by setting `-jN` in
-`TEST_PHP_ARGS`:
+Running `ant` in the newly created project's root directory will download
+Composer, install development dependencies, run PHPUnit, and generate a code
+coverage report and software metrics in the `./build` directory.
 
-    make TEST_PHP_ARGS=-j4 test
+The main targets can be found by running `ant -p` and are listed below:
 
-Shall run `make test` with a maximum of 4 concurrent jobs: Generally the maximum
-number of jobs should not exceed the number of cores available.
+* `clean`: Cleanup build artifacts
+* `clean-src`: Cleanup dependency source code
+* `clean-all`: Cleanup build artifacts and dependency source code
+* `composer`: Run composer update
+* `lint`: Perform syntax check of sourcecode files
+* `pdepend`: Calculate software metrics using PHP_Depend
+* `phpcpd`: Find duplicate code using PHPCPD
+* `phploc`: Measure project size using PHPLOC
+* `phpmd`: Perform mess detection using PHPMD, print human readable output.
+* `phpmd-ci`: Perform mess detection using PHPMD, creating a log file for the CI server
+* `phpunit`: Run unit tests with PHPUnit
 
-The [qa.php.net](https://qa.php.net) site provides more detailed info about
-testing and quality assurance.
+Common command line options that set Ant properties are listed below:
 
-## Installing PHP built from source
+* `-Dcomposer.noselfupdate=1`: Do not run `composer self-update` during the build
+* `-Dcomposer.noupdate=1`: Do not run `composer update` during the build
 
-After a successful build (and test), PHP may be installed with:
+## Tools And Conventions
 
-    make install
+Tools and conventions that this template expects the PHP project being started
+to embrace.
 
-Depending on your permissions and prefix, `make install` may need super user
-permissions.
+### Dependency Management
 
-## PHP extensions
+* [Composer](http://getcomposer.org/)
 
-Extensions provide additional functionality on top of PHP. PHP consists of many
-essential bundled extensions. Additional extensions can be found in the PHP
-Extension Community Library - [PECL](https://pecl.php.net).
+### Build & CI
 
-## Contributing
+* [Apache Ant](http://ant.apache.org/)
+* [Jenkins](http://jenkins-ci.org/)
+* [PHPUnit](https://github.com/sebastianbergmann/phpunit/)
+* [Scrutinizer CI](https://scrutinizer-ci.com/)
+* [Travis CI](https://travis-ci.org/)
 
-The PHP source code is located in the Git repository at
-[github.com/php/php-src](https://github.com/php/php-src). Contributions are most
-welcome by forking the repository and sending a pull request.
+### Code Quality
 
-Discussions are done on GitHub, but depending on the topic can also be relayed
-to the official PHP developer mailing list internals@lists.php.net.
+* [PHP Analyzer](https://scrutinizer-ci.com/docs/tools/php/php-analyzer/)
+* [PHP Coding Standards Fixer](https://github.com/fabpot/PHP-CS-Fixer)
+* [PHP Depend](http://pdepend.org/)
+* [PHPCPD](https://github.com/sebastianbergmann/phpcpd)
+* [PHPLOC](https://github.com/sebastianbergmann/phploc)
+* [PHPMD](http://phpmd.org/)
 
-New features require an RFC and must be accepted by the developers. See
-[Request for comments - RFC](https://wiki.php.net/rfc) and
-[Voting on PHP features](https://wiki.php.net/rfc/voting) for more information
-on the process.
+### Services
 
-Bug fixes don't require an RFC. If the bug has a GitHub issue, reference it in
-the commit message using `GH-NNNNNN`. Use `#NNNNNN` for tickets in the old
-[bugs.php.net](https://bugs.php.net) bug tracker.
+* [Badge Poser](https://poser.pugx.org/)
+* [GitHub](https://github.com/)
+* [Packagist](https://packagist.org/)
+* [Scrutinizer CI](https://scrutinizer-ci.com/)
+* [Travis CI](https://travis-ci.org/)
 
-    Fix GH-7815: php_uname doesn't recognise latest Windows versions
-    Fix #55371: get_magic_quotes_gpc() throws deprecation warning
+### Conventions
 
-See [Git workflow](https://wiki.php.net/vcs/gitworkflow) for details on how pull
-requests are merged.
+* [EditorConfig](http://editorconfig.org/)
+* [The MIT License (MIT)](http://opensource.org/licenses/MIT)
+* [PHP Standards Recommendations (PSR)](http://www.php-fig.org/)
+* [Template for Jenkins Jobs for PHP Projects](http://jenkins-php.org/)
 
-### Guidelines for contributors
+## Directory Structure
 
-See further documents in the repository for more information on how to
-contribute:
+### PHP Project
 
-- [Contributing to PHP](/CONTRIBUTING.md)
-- [PHP coding standards](/CODING_STANDARDS.md)
-- [Mailing list rules](/docs/mailinglist-rules.md)
-- [PHP release process](/docs/release-process.md)
+```
+.
+|-- src/
+|-- test/
+|-- .editorconfig
+|-- .gitignore
+|-- .scrutinizer.yml
+|-- .travis.yml
+|-- build.xml
+|-- composer.json
+|-- phpmd.xml
+|-- phpunit.xml
+|-- LICENSE
+`-- README.md
 
-## Credits
+```
 
-For the list of people who've put work into PHP, please see the
-[PHP credits page](https://php.net/credits.php).
+### Build Artifacts
+
+```
+.
+`-- build/
+    |-- coverage/
+    |   `--index.html
+    |-- logs/
+    |   |-- clover.xml
+    |   |-- jdepend.xml
+    |   |-- junit.xml
+    |   |-- phploc.csv
+    |   |-- pmd-cpd.xml
+    |   `-- pmd.xml
+    |-- pdepend/
+    |   |-- dependencies.svg
+    |   `-- overview-pyramid.svg
+    `-- composer.phar
