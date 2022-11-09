@@ -29,9 +29,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
       {
         $user=$_POST["username"];
         $pass=$_POST["password"];
-        if($user=="ifte")
+        if($user=="sajjad")
         {
-          if($pass=="ifte123")
+          if($pass=="sajjad123")
           {
             header("Location:adminProfile.php");
           }
