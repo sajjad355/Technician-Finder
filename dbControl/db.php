@@ -156,6 +156,51 @@ header('location:../userShowProfile.php');
  }
 
 
+ function techupdateinsert($conn,$fullname,$mobile, $password, $email,$birth , $address,$id)
+ {
+
+$result="UPDATE `technician` SET `Fullname` = '$fullname', `mobile` = ' $mobile', `password` = '$password', `email` = '$email', `birth` = '$birth', `address` = '$address' WHERE `technician`.`id` = $id;";
+if ($conn->query($result) === TRUE) {
+
+header('location:../technicianShowProfile.php');
+} else {
+   
+    echo "Error: " . $result . "<br>" . $conn->error;
+}
+ }
+
+
+ function gettech($conn,$username,$mobile)
+
+ {
+     $q= $conn->query("SELECT * FROM `technician` WHERE (`technician`.`username`='$username' AND `technician`.`mobile`=$mobile)");
+    return $q;
+ }
+ function getuser($conn,$username,$mobile)
+
+ {
+     $q= $conn->query("SELECT * FROM `user` WHERE (`user`.`username`='$username' AND `user`.`mobile`=$mobile)");
+    return $q;
+ }
+
+ function getuserbypass($conn,$username,$pass)
+
+ {
+     $q= $conn->query("SELECT * FROM `user` WHERE (`user`.`username`='$username' AND `user`.`password`='$pass')");
+    return $q;
+ }
+
+
+ function gettechbypass($conn,$username,$pass)
+
+ {
+     $q= $conn->query("SELECT * FROM `technician` WHERE (`technician`.`username`='$username' AND `technician`.`password`='$pass')");
+    return $q;
+ }
+
+
+
+
  function CloseCon($conn)
  {
  $conn -> close();
