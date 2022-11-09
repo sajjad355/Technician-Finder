@@ -2,6 +2,6 @@
 
 Prerequisite 
 
--> The Apache Web server
--> The PHP engine
--> The MySQL database server
+-> Apache Web server
+-> PHP engine
+-> MySQL database server
